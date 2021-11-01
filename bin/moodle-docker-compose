@@ -65,12 +65,4 @@ then
     dockercompose="${dockercompose} -f ${basedir}/webserver.port.yml"
 fi
 
-
-# Mac OS Compatbility
-if [[ "$(uname)" == "Darwin" ]]; then
-    # Support https://docs.docker.com/docker-for-mac/osxfs-caching/
-    dockercompose="${dockercompose} -f ${basedir}/volumes-cached.yml"
-fi
-
-
 $dockercompose "$@"

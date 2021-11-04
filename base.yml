@@ -1,7 +1,5 @@
 version: "2"
 services:
-  reverse_proxy:
-    image: nginx:1.21.3
   moodleserver:
     image: "moodlehq/moodle-php-apache:${MOODLE_DOCKER_PHP_VERSION}"
     depends_on:
@@ -26,4 +24,12 @@ services:
       POSTGRES_USER: moodle
       POSTGRES_PASSWORD: "m@0dl3ing"
       POSTGRES_DB: moodle
+  reverse_proxy:
+    image: nginx:1.21.3
+    depends_on:
+      - moodleserver
+    volumes:
+      - "${ASSETDIR}/nginx/nginx.conf:/etc/nginx/conf.d/custom.conf:ro"
+    ports:
+      - "5443:443"
 

@@ -27,6 +27,8 @@ if (!empty($port)) {
         $CFG->wwwroot .= ":{$port}";
     }
 }
+$CFG->wwwroot .= "/lms";
+
 $CFG->dataroot  = '/var/www/moodledata';
 $CFG->admin     = 'admin';
 $CFG->directorypermissions = 0777;

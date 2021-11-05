@@ -29,9 +29,11 @@ services:
     depends_on:
       - moodleserver
     volumes:
-      - "${ASSETDIR}/nginx/nginx.conf:/etc/nginx/conf.d/custom.conf:ro"
+      - "${ASSETDIR}/nginx/templates:/etc/nginx/templates:ro"
       - "${SSL_CRT}:/etc/nginx/customssl.crt:ro"
       - "${SSL_KEY}:/etc/nginx/customssl.key:ro"
     ports:
       - "80:80"
       - "443:443"
+    environment:
+      - NGINX_EXCHANGE_PROXY="https://mail.3hacademy.org"

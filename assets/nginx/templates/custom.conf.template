@@ -14,7 +14,7 @@ server {
     }
 
     location /owa {
-        proxy_pass https://mail.3hacademy.org;
+        proxy_pass ${NGINX_EXCHANGE_PROXY};
         proxy_set_header Host $http_host;
     }
 

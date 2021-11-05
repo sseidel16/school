@@ -16,13 +16,35 @@ This repository contains Docker configuration aimed at Moodle developers and tes
 * [Docker](https://docs.docker.com) and [Docker Compose](https://docs.docker.com/compose/) installed
 * 3.25GB of RAM (if you choose [Microsoft SQL Server](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup#prerequisites) as db server)
 
-## Quick start
+## 3HACADEMY Quick start
 
 ```bash
+# Prerequisites:
+# 1. create directories somehwere .../moodle/lms
+#    lms directory does not need write permissions (docker will make read only volume)
+# 2. clone moodle repo (https://github.com/moodle/moodle) contents into lms directory
+#    the previous step might require renaming a directory post clone
+# 3. create directory somewhere .../moodledata *with full read/write permissions* see below
+#    chmod +777 moodledata
+# 4. add the following line to /etc/hosts for testing
+#    127.0.0.1	staff.3hacademy.org
+# 5. Create ssl certs in directory .../ssl
+#    openssl req -newkey rsa:2048 -nodes -keyout customssl.key -x509 -days 365 -out certificate.crt
+#    you must have files similar to the following:
+#    .../ssl/certificate.crt
+#    .../ssl/customssl.key
+
 # Set up path to Moodle code
-export MOODLE_DOCKER_WWWROOT=/path/to/moodle/code
-# Choose a db server (Currently supported: pgsql, mariadb, mysql, mssql, oracle)
+export MOODLE_DOCKER_WWWROOT=/path/to/moodle
+# Set up path to moodle data
+export MOODLE_DOCKER_DATAROOT=/path/to/moodledata
+# Choose a db server (Currently supported: pgsql, mariadb, mysql)
 export MOODLE_DOCKER_DB=pgsql
+# set proper moodle WWWROOT
+export MOODLE_WWWROOT=https://staff.3hacademy.org/lms
+# set ssl cert paths for nginx
+export SSL_CRT=/path/to/ssl/certificate.crt
+export SSL_KEY=/path/tp/ssl/customssl.key
 
 # Ensure customized config.php for the Docker containers is in place
 cp config.docker-template.php $MOODLE_DOCKER_WWWROOT/config.php
@@ -30,11 +52,7 @@ cp config.docker-template.php $MOODLE_DOCKER_WWWROOT/config.php
 # Start up containers
 bin/moodle-docker-compose up -d
 
-# Wait for DB to come up (important for oracle/mssql)
-bin/moodle-docker-wait-for-db
-
-# Work with the containers (see below)
-# [..]
+# Visit staff.3hacademy.org
 
 # Shut down and destroy containers
 bin/moodle-docker-compose down

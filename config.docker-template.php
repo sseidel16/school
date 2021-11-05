@@ -14,6 +14,7 @@ $CFG->prefix    = 'm_';
 $CFG->dboptions = ['dbcollation' => getenv('MOODLE_DOCKER_DBCOLLATION')];
 
 $CFG->wwwroot   = getenv('MOODLE_WWWROOT');
+$CFG->sslproxy  = true;
 
 $CFG->dataroot  = '/var/www/moodledata';
 $CFG->admin     = 'admin';

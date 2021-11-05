@@ -30,6 +30,7 @@ services:
       - moodleserver
     volumes:
       - "${ASSETDIR}/nginx/templates:/etc/nginx/templates:ro"
+      - "${ASSETDIR}/nginx/static:/usr/share/nginx/html:ro"
       - "${SSL_CRT}:/etc/nginx/customssl.crt:ro"
       - "${SSL_KEY}:/etc/nginx/customssl.key:ro"
     ports:

@@ -13,21 +13,7 @@ $CFG->dbpass    = getenv('MOODLE_DOCKER_DBPASS');
 $CFG->prefix    = 'm_';
 $CFG->dboptions = ['dbcollation' => getenv('MOODLE_DOCKER_DBCOLLATION')];
 
-$host = 'localhost';
-if (!empty(getenv('MOODLE_DOCKER_WEB_HOST'))) {
-    $host = getenv('MOODLE_DOCKER_WEB_HOST');
-}
-$CFG->wwwroot   = "http://{$host}";
-$port = getenv('MOODLE_DOCKER_WEB_PORT');
-if (!empty($port)) {
-    // Extract port in case the format is bind_ip:port.
-    $parts = explode(':', $port);
-    $port = end($parts);
-    if ((string)(int)$port === (string)$port) { // Only if it's int value.
-        $CFG->wwwroot .= ":{$port}";
-    }
-}
-$CFG->wwwroot .= "/lms";
+$CFG->wwwroot   = getenv('MOODLE_WWWROOT');
 
 $CFG->dataroot  = '/var/www/moodledata';
 $CFG->admin     = 'admin';
@@ -55,7 +41,7 @@ $CFG->behat_dataroot  = '/var/www/behatdata';
 $CFG->behat_prefix = 'b_';
 $CFG->behat_profiles = array(
     'default' => array(
-        'browser' => getenv('MOODLE_DOCKER_BROWSER'),
+        'browser' => 'firefox',
         'wd_host' => 'http://selenium:4444/wd/hub',
     ),
 );

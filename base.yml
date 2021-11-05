@@ -13,11 +13,7 @@ services:
       MOODLE_DOCKER_DBNAME: moodle
       MOODLE_DOCKER_DBUSER: moodle
       MOODLE_DOCKER_DBPASS: "m@0dl3ing"
-      MOODLE_DOCKER_BROWSER: firefox
-      MOODLE_DOCKER_WEB_HOST: "${MOODLE_DOCKER_WEB_HOST}"
-      MOODLE_DOCKER_WEB_PORT: "${MOODLE_DOCKER_WEB_PORT}"
-    ports:
-      - "${MOODLE_DOCKER_WEB_PORT}:80"
+      MOODLE_WWWROOT: "${MOODLE_WWWROOT}"
   moodledb:
     image: postgres:11
     environment:
@@ -30,6 +26,8 @@ services:
       - moodleserver
     volumes:
       - "${ASSETDIR}/nginx/nginx.conf:/etc/nginx/conf.d/custom.conf:ro"
+      - "${SSL_CRT}:/etc/nginx/customssl.crt:ro"
+      - "${SSL_KEY}:/etc/nginx/customssl.key:ro"
     ports:
-      - "5443:443"
-
+      - "80:80"
+      - "443:443"

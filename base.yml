@@ -1,13 +1,17 @@
 version: "2"
 services:
+  mailhog:
+    image: mailhog/mailhog
   moodleserver:
     image: "moodlehq/moodle-php-apache:${MOODLE_DOCKER_PHP_VERSION}"
     depends_on:
+      - mailhog
       - moodledb
     volumes:
       - "${MOODLE_DOCKER_WWWROOT}:/var/www/html:ro"
       - "${MOODLE_DOCKER_DATAROOT}:/var/www/moodledata"
       - "${ASSETDIR}/web/apache2_faildumps.conf:/etc/apache2/conf-enabled/apache2_faildumps.conf"
+      - "${ASSETDIR}/web/apache2_mailhog.conf:/etc/apache2/conf-enabled/apache2_mailhog.conf"
     environment:
       MOODLE_DOCKER_DBTYPE: pgsql
       MOODLE_DOCKER_DBNAME: moodle

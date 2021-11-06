@@ -23,7 +23,7 @@ This repository contains Docker configuration aimed at Moodle developers and tes
 # 1. create directories somehwere .../moodle/lms
 #    lms directory does not need write permissions (docker will make read only volume)
 # 2. clone moodle repo (https://github.com/moodle/moodle) contents into lms directory
-#    the previous step might require renaming a directory post clone
+#    git clone -b MOODLE_311_STABLE https://github.com/moodle/moodle.git /path/to/moodle/lms
 # 3. create directory somewhere .../moodledata *with full read/write permissions* see below
 #    chmod +777 moodledata
 # 4. add the following line to /etc/hosts for testing

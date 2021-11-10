@@ -25,7 +25,7 @@ This repository contains Docker configuration aimed at Moodle developers and tes
 # 2. clone moodle repo (https://github.com/moodle/moodle) contents into lms directory
 #    git clone -b MOODLE_311_STABLE https://github.com/moodle/moodle.git /path/to/moodle/lms
 # 3. create directory somewhere .../moodledata *with full read/write permissions* see below
-#    chmod +777 moodledata
+#    chmod 777 moodledata
 # 4. add the following line to /etc/hosts for testing
 #    127.0.0.1	staff.3hacademy.org
 # 5. Create ssl certs in directory .../ssl
@@ -47,7 +47,7 @@ export SSL_CRT=/path/to/ssl/certificate.crt
 export SSL_KEY=/path/tp/ssl/customssl.key
 
 # Ensure customized config.php for the Docker containers is in place
-cp config.docker-template.php $MOODLE_DOCKER_WWWROOT/config.php
+cp config.docker-template.php $MOODLE_DOCKER_WWWROOT/lms/config.php
 
 # Start up containers
 bin/moodle-docker-compose up -d

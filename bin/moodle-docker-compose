@@ -1,15 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
-if [ ! -d "$MOODLE_DOCKER_WWWROOT" ];
+if [ -z "$SCHOOL_MOODLE_DB" ];
 then
-    echo 'Error: $MOODLE_DOCKER_WWWROOT is not set or not an existing directory'
-    exit 1
-fi
-
-if [ -z "$MOODLE_DOCKER_DB" ];
-then
-    echo 'Error: $MOODLE_DOCKER_DB is not set'
+    echo 'Error: $SCHOOL_MOODLE_DB is not set'
     exit 1
 fi
 
@@ -31,14 +25,14 @@ dockercompose="docker-compose -f ${basedir}/base.yml"
 export MOODLE_DOCKER_PHP_VERSION=${MOODLE_DOCKER_PHP_VERSION:-7.3}
 
 # Database flavour
-if [ "$MOODLE_DOCKER_DB" != 'pgsql' ];
+if [ "$SCHOOL_MOODLE_DB" != 'pgsql' ];
 then
-    dockercompose="${dockercompose} -f ${basedir}/db.${MOODLE_DOCKER_DB}.yml"
+    dockercompose="${dockercompose} -f ${basedir}/db.${SCHOOL_MOODLE_DB}.yml"
 
 fi
 
 # Support PHP version overrides for DB..
-filename="${basedir}/db.${MOODLE_DOCKER_DB}.${MOODLE_DOCKER_PHP_VERSION}.yml"
+filename="${basedir}/db.${SCHOOL_MOODLE_DB}.${MOODLE_DOCKER_PHP_VERSION}.yml"
 if [ -f $filename ]; then
     dockercompose="${dockercompose} -f ${filename}"
 fi

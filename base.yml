@@ -8,8 +8,8 @@ services:
       - mailhog
       - moodledb
     volumes:
-      - "${MOODLE_DOCKER_WWWROOT}:/var/www/html:ro"
-      - "${MOODLE_DOCKER_DATAROOT}:/var/www/moodledata"
+      - "${SCHOOL_MOODLE_WWWROOT}:/var/www/html:ro"
+      - "${SCHOOL_MOODLE_DATAROOT}:/var/www/moodledata"
       - "${ASSETDIR}/web/apache2_faildumps.conf:/etc/apache2/conf-enabled/apache2_faildumps.conf"
       - "${ASSETDIR}/web/apache2_mailhog.conf:/etc/apache2/conf-enabled/apache2_mailhog.conf"
     environment:
@@ -17,7 +17,7 @@ services:
       MOODLE_DOCKER_DBNAME: moodle
       MOODLE_DOCKER_DBUSER: moodle
       MOODLE_DOCKER_DBPASS: "m@0dl3ing"
-      MOODLE_WWWROOT: "${MOODLE_WWWROOT}"
+      MOODLE_DOCKER_WWWROOT: "${SCHOOL_SITE_ORIGIN}/lms"
   moodledb:
     image: postgres:11
     environment:
@@ -31,8 +31,8 @@ services:
     volumes:
       - "${ASSETDIR}/nginx/templates:/etc/nginx/templates:ro"
       - "${ASSETDIR}/nginx/static:/usr/share/nginx/html:ro"
-      - "${SSL_CRT}:/etc/nginx/customssl.crt:ro"
-      - "${SSL_KEY}:/etc/nginx/customssl.key:ro"
+      - "${SCHOOL_SSL_CRT}:/etc/nginx/customssl.crt:ro"
+      - "${SCHOOL_SSL_KEY}:/etc/nginx/customssl.key:ro"
     ports:
       - "80:80"
       - "443:443"

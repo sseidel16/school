@@ -35,19 +35,19 @@ This repository contains Docker configuration aimed at Moodle developers and tes
 #    .../ssl/customssl.key
 
 # Set up path to Moodle code
-export MOODLE_DOCKER_WWWROOT=/path/to/moodle
+export SCHOOL_MOODLE_WWWROOT=/path/to/moodle
 # Set up path to moodle data
-export MOODLE_DOCKER_DATAROOT=/path/to/moodledata
+export SCHOOL_MOODLE_DATAROOT=/path/to/moodledata
 # Choose a db server (Currently supported: pgsql, mariadb, mysql)
-export MOODLE_DOCKER_DB=pgsql
-# set proper moodle WWWROOT
-export MOODLE_WWWROOT=https://staff.3hacademy.org/lms
+export SCHOOL_MOODLE_DB=pgsql
+# set proper school site origin
+export SCHOOL_SITE_ORIGIN=https://staff.3hacademy.org
 # set ssl cert paths for nginx
-export SSL_CRT=/path/to/ssl/certificate.crt
-export SSL_KEY=/path/tp/ssl/customssl.key
+export SCHOOL_SSL_CRT=/path/to/ssl/certificate.crt
+export SCHOOL_SSL_KEY=/path/to/ssl/customssl.key
 
 # Ensure customized config.php for the Docker containers is in place
-cp config.docker-template.php $MOODLE_DOCKER_WWWROOT/lms/config.php
+cp config.docker-template.php $SCHOOL_MOODLE_WWWROOT/lms/config.php
 
 # Start up containers
 bin/moodle-docker-compose up -d

@@ -13,7 +13,7 @@ $CFG->dbpass    = getenv('MOODLE_DOCKER_DBPASS');
 $CFG->prefix    = 'm_';
 $CFG->dboptions = ['dbcollation' => getenv('MOODLE_DOCKER_DBCOLLATION')];
 
-$CFG->wwwroot   = getenv('MOODLE_WWWROOT');
+$CFG->wwwroot   = getenv('MOODLE_DOCKER_WWWROOT');
 $CFG->sslproxy  = true;
 
 $CFG->dataroot  = '/var/www/moodledata';

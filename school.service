@@ -1,0 +1,18 @@
+[Unit]
+Description=Main docker system for school project
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=3
+IgnoreSIGPIPE=false
+EnvironmentFile=/etc/environment
+ExecStartPre=/bin/bash -c "${SCHOOL_DOCKER_SCRIPT} down"
+ExecStart=/bin/bash -c "${SCHOOL_DOCKER_SCRIPT} up"
+ExecStop=/bin/bash -c "${SCHOOL_DOCKER_SCRIPT} down"
+
+[Install]
+WantedBy=multi-user.target
+

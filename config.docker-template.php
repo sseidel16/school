@@ -22,32 +22,18 @@ $CFG->directorypermissions = 0777;
 $CFG->smtphosts = 'mailhog:1025';
 $CFG->noreplyaddress = 'noreply@example.com';
 
-// Debug options - possible to be controlled by flag in future..
-$CFG->debug = (E_ALL | E_STRICT); // DEBUG_DEVELOPER
-$CFG->debugdisplay = 1;
-$CFG->debugstringids = 1; // Add strings=1 to url to get string ids.
-$CFG->perfdebug = 15;
-$CFG->debugpageinfo = 1;
-$CFG->allowthemechangeonurl = 1;
-$CFG->passwordpolicy = 0;
-$CFG->cronclionly = 0;
+// Path parameters
 $CFG->pathtophp = '/usr/local/bin/php';
 
-$CFG->phpunit_dataroot  = '/var/www/phpunitdata';
-$CFG->phpunit_prefix = 't_';
-define('TEST_EXTERNAL_FILES_HTTP_URL', 'http://exttests:9000');
+$CFG->cronclionly = 0;
 
-$CFG->behat_wwwroot   = 'http://moodleserver';
-$CFG->behat_dataroot  = '/var/www/behatdata';
-$CFG->behat_prefix = 'b_';
-$CFG->behat_profiles = array(
-    'default' => array(
-        'browser' => 'firefox',
-        'wd_host' => 'http://selenium:4444/wd/hub',
-    ),
-);
-$CFG->behat_faildump_path = '/var/www/behatfaildumps';
-
-define('PHPUNIT_LONGTEST', true);
+// Debug options - possible to be controlled by flag in future..
+// $CFG->debug = (E_ALL | E_STRICT); // DEBUG_DEVELOPER
+// $CFG->debugdisplay = 1;
+// $CFG->debugstringids = 1; // Add strings=1 to url to get string ids.
+// $CFG->perfdebug = 15;
+// $CFG->debugpageinfo = 1;
+// $CFG->allowthemechangeonurl = 1;
+// $CFG->passwordpolicy = 0;
 
 require_once(__DIR__ . '/lib/setup.php');

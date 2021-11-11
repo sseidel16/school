@@ -26,9 +26,11 @@ This repository contains Docker configuration aimed at Moodle developers and tes
 #    git clone -b MOODLE_311_STABLE https://github.com/moodle/moodle.git /path/to/moodle/lms
 # 3. create directory somewhere .../moodledata *with full read/write permissions* see below
 #    chmod 777 moodledata
-# 4. add the following line to /etc/hosts for testing
+# 4. create directory somewhere .../moodledbdata *with full read/write permissions* see below
+#    chmod 777 moodledbdata
+# 5. add the following line to /etc/hosts for testing
 #    127.0.0.1	staff.3hacademy.org
-# 5. Create ssl certs in directory .../ssl
+# 6. Create ssl certs in directory .../ssl
 #    openssl req -newkey rsa:2048 -nodes -keyout customssl.key -x509 -days 365 -out certificate.crt
 #    you must have files similar to the following:
 #    .../ssl/certificate.crt
@@ -40,6 +42,8 @@ export SCHOOL_MOODLE_WWWROOT=/path/to/moodle
 export SCHOOL_MOODLE_DATAROOT=/path/to/moodledata
 # Choose a db server (Currently supported: pgsql, mariadb, mysql)
 export SCHOOL_MOODLE_DB=pgsql
+# Set up path to moodledb data
+export SCHOOL_MOODLEDB_DATAROOT=/path/to/moodledbdata
 # set proper school site origin
 export SCHOOL_SITE_ORIGIN=https://staff.3hacademy.org
 # set ssl cert paths for nginx

@@ -20,46 +20,43 @@ This repository contains Docker configuration aimed at Moodle developers and tes
 
 ```bash
 # Prerequisites:
-# 1. create directories somehwere .../moodle/lms
-#    lms directory does not need write permissions (docker will make read only volume)
-# 2. clone moodle repo (https://github.com/moodle/moodle) contents into lms directory
-#    git clone -b MOODLE_311_STABLE https://github.com/moodle/moodle.git /path/to/moodle/lms
-# 3. create directory somewhere .../moodledata *with full read/write permissions* see below
-#    chmod 777 moodledata
-# 4. create directory somewhere .../moodledbdata *with full read/write permissions* see below
-#    chmod 777 moodledbdata
+# 1. create directory somehwere .../moodle
+#    moodle directory does not need write permissions (docker will make read only volume)
+# 2. clone moodle repo (https://github.com/moodle/moodle) contents into moodle directory
+#    git clone -b MOODLE_311_STABLE https://github.com/moodle/moodle.git /path/to/moodle
+# 3. create directory somewhere .../data *with full read/write permissions* see below
+#    chmod 777 data
 # 5. add the following line to /etc/hosts for testing
 #    127.0.0.1	staff.3hacademy.org
-# 6. Create ssl certs in directory .../ssl
-#    openssl req -newkey rsa:2048 -nodes -keyout customssl.key -x509 -days 365 -out certificate.crt
+#    127.0.0.1	mail.3hacademy.org
+#    127.0.0.1	learning.3hacademy.org
+# 6. Create ssl crt and key (both named school) in directory .../ssl
+#    openssl req -newkey rsa:2048 -nodes -keyout school.key -x509 -days 365 -out school.crt
 #    you must have files similar to the following:
-#    .../ssl/certificate.crt
-#    .../ssl/customssl.key
+#    .../ssl/school.crt
+#    .../ssl/school.key
 
 # Set up path to Moodle code
 export SCHOOL_MOODLE_WWWROOT=/path/to/moodle
-# Set up path to moodle data
-export SCHOOL_MOODLE_DATAROOT=/path/to/moodledata
-# Choose a db server (Currently supported: pgsql, mariadb, mysql)
-export SCHOOL_MOODLE_DB=pgsql
-# Set up path to moodledb data
-export SCHOOL_MOODLEDB_DATAROOT=/path/to/moodledbdata
-# set proper school site origin
-export SCHOOL_SITE_ORIGIN=https://staff.3hacademy.org
-# set ssl cert paths for nginx
-export SCHOOL_SSL_CRT=/path/to/ssl/certificate.crt
-export SCHOOL_SSL_KEY=/path/to/ssl/customssl.key
+# Set up path to data
+export SCHOOL_DATAROOT=/path/to/data
+# set proper school domain
+export SCHOOL_DOMAIN=3hacademy.org
+# set ssl dir with key and crt for nginx
+export SCHOOL_SSL_DIR=/path/to/ssl
+# set mail server ip
+export SCHOOL_MAIL_IP=199.66.173.173
 
 # Ensure customized config.php for the Docker containers is in place
-cp config.docker-template.php $SCHOOL_MOODLE_WWWROOT/lms/config.php
+cp config.docker-template.php $SCHOOL_MOODLE_WWWROOT/config.php
 
 # Start up containers
-bin/moodle-docker-compose up -d
+bin/school-docker-compose up -d
 
 # Visit staff.3hacademy.org
 
 # Shut down and destroy containers
-bin/moodle-docker-compose down
+bin/school-docker-compose down
 ```
 ## Run several Moodle instances
 

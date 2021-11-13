@@ -9,7 +9,7 @@ services:
       - moodledb
     volumes:
       - "${SCHOOL_MOODLE_WWWROOT}:/var/www/html:ro"
-      - "${SCHOOL_MOODLE_DATAROOT}:/var/www/moodledata"
+      - "${SCHOOL_DATAROOT}/moodle:/var/www/moodledata"
       - "${ASSETDIR}/web/apache2_faildumps.conf:/etc/apache2/conf-enabled/apache2_faildumps.conf"
       - "${ASSETDIR}/web/apache2_mailhog.conf:/etc/apache2/conf-enabled/apache2_mailhog.conf"
     environment:
@@ -17,11 +17,11 @@ services:
       MOODLE_DOCKER_DBNAME: moodle
       MOODLE_DOCKER_DBUSER: moodle
       MOODLE_DOCKER_DBPASS: "m@0dl3ing"
-      MOODLE_DOCKER_WWWROOT: "${SCHOOL_SITE_ORIGIN}/lms"
+      MOODLE_DOCKER_WWWROOT: "https://learning.${SCHOOL_DOMAIN}"
   moodledb:
     image: postgres:14
     volumes:
-      - "${SCHOOL_MOODLEDB_DATAROOT}:/var/lib/postgresql/data"
+      - "${SCHOOL_DATAROOT}/moodledb:/var/lib/postgresql/data"
     environment:
       POSTGRES_USER: moodle
       POSTGRES_PASSWORD: "m@0dl3ing"
@@ -33,10 +33,14 @@ services:
     volumes:
       - "${ASSETDIR}/nginx/templates:/etc/nginx/templates:ro"
       - "${ASSETDIR}/nginx/static:/usr/share/nginx/html:ro"
-      - "${SCHOOL_SSL_CRT}:/etc/nginx/customssl.crt:ro"
-      - "${SCHOOL_SSL_KEY}:/etc/nginx/customssl.key:ro"
+      - "${SCHOOL_SSL_DIR}/school.crt:/etc/nginx/school.crt:ro"
+      - "${SCHOOL_SSL_DIR}/school.key:/etc/nginx/school.key:ro"
     ports:
       - "80:80"
       - "443:443"
     environment:
-      - NGINX_EXCHANGE_PROXY="https://mail.3hacademy.org"
+      - NGINX_MAIN_ORIGIN="staff.${SCHOOL_DOMAIN}"
+      - NGINX_MAIL_ORIGIN="mail.${SCHOOL_DOMAIN}"
+      - NGINX_MAIL_PROXY="https://${SCHOOL_MAIL_IP}"
+      - NGINX_LEARNING_ORIGIN="learning.${SCHOOL_DOMAIN}"
+      - NGINX_LEARNING_PROXY="http://moodleserver"

@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 set -e
 
-if [ -z "$SCHOOL_MOODLE_DB" ];
+if [ ! -d "$SCHOOL_DATAROOT" ];
 then
-    echo 'Error: $SCHOOL_MOODLE_DB is not set'
+    echo 'Error: No data directory to work with'
     exit 1
 fi
+
+(cd ${SCHOOL_DATAROOT}; mkdir -p -m777 {"moodle","moodledb"})
 
 # Nasty portable way to the directory of this script, following symlink,
 # because readlink -f not on OSX. Thanks stack overflow..
@@ -24,15 +26,8 @@ dockercompose="docker-compose -f ${basedir}/base.yml"
 # PHP Version.
 export MOODLE_DOCKER_PHP_VERSION=${MOODLE_DOCKER_PHP_VERSION:-7.3}
 
-# Database flavour
-if [ "$SCHOOL_MOODLE_DB" != 'pgsql' ];
-then
-    dockercompose="${dockercompose} -f ${basedir}/db.${SCHOOL_MOODLE_DB}.yml"
-
-fi
-
 # Support PHP version overrides for DB..
-filename="${basedir}/db.${SCHOOL_MOODLE_DB}.${MOODLE_DOCKER_PHP_VERSION}.yml"
+filename="${basedir}/db.pgsql.${MOODLE_DOCKER_PHP_VERSION}.yml"
 if [ -f $filename ]; then
     dockercompose="${dockercompose} -f ${filename}"
 fi

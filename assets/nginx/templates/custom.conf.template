@@ -21,6 +21,8 @@ server {
     ssl_ciphers         HIGH:!aNULL:!MD5;
     # ssl_session_cache   builtin:1000 shared:SSL:10m;
 
+    client_max_body_size 100M;
+
     server_name         ${NGINX_MAIL_ORIGIN};
 
     location / {
